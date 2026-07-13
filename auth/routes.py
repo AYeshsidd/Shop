@@ -4,12 +4,14 @@ from core.db import get_db
 from auth.alchemy_model import Users
 from auth.pydanctic_schema import UserCreate , UserResponse
 from core.security import hash_password
+from core.security import verify_password, create_access_token, create_refresh_token
+from auth.pydanctic_schema import UserLogin, TokenPair   # apni file ka naam use karein
+
 
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"]
 )
-
 
 @router.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
@@ -41,3 +43,26 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.refresh(new_user)
 
     return new_user
+
+
+@router.post("/login", response_model=TokenPair)
+def login(credentials: UserLogin, db: Session = Depends(get_db)):
+
+    user = db.query(Users).filter(Users.email == credentials.email).first()
+
+    if not user or not verify_password(credentials.password, user.password_hash):
+        raise HTTPException(
+            status_code=401,
+            detail="Incorrect email or password"
+        )
+
+    token_data = {
+        "sub": user.email,
+        "user_id": user.user_id,
+        "role": user.role
+    }
+
+    return TokenPair(
+        access_token=create_access_token(token_data),
+        refresh_token=create_refresh_token(token_data)
+    )

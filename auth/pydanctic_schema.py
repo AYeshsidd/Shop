@@ -18,13 +18,15 @@ class UserCreate(BaseModel):
         return value
     
 
-class Userlogin(BaseModel):
+class UserLogin(BaseModel):
     email : str
     password: str = Field(min_length=8, max_length=72)
-    role : Literal["customer", "admin", "cashier"] = "customer"
-    phone : str
 
 
+class TokenPair(BaseModel):
+    access_token: str
+    refresh_token: str
+    token_type: str = "bearer"    
 
 class UserResponse(BaseModel):
         user_id: int
