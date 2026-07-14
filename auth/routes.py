@@ -5,7 +5,9 @@ from auth.alchemy_model import Users
 from auth.pydanctic_schema import UserCreate , UserResponse
 from core.security import hash_password
 from core.security import verify_password, create_access_token, create_refresh_token
-from auth.pydanctic_schema import UserLogin, TokenPair   # apni file ka naam use karein
+from auth.pydanctic_schema import UserLogin, TokenPair 
+from auth.dependencies import get_current_user
+from auth.alchemy_model import Users
 
 
 router = APIRouter(
@@ -66,3 +68,8 @@ def login(credentials: UserLogin, db: Session = Depends(get_db)):
         access_token=create_access_token(token_data),
         refresh_token=create_refresh_token(token_data)
     )
+
+
+@router.get("/me", response_model=UserResponse)
+def read_current_user(current_user: Users = Depends(get_current_user)):
+    return current_user
