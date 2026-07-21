@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String , DateTime , Enum ,func
 from core.db import Base
 
-
 class Users(Base): # Base will tell this belong to sql alchemy
     __tablename__ = "users"
 
@@ -14,4 +13,3 @@ class Users(Base): # Base will tell this belong to sql alchemy
     password_hash = Column(String(255), nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
-    
