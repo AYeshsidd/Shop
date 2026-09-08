@@ -1,6 +1,5 @@
 import sys
 import os
-
 # taake alembic hamare project ke folders (core, auth) import kar sake
 sys.path.append(os.getcwd())
 
@@ -15,6 +14,7 @@ from core.config import settings
 from core.db import Base
 from auth.alchemy_model import Users   # naya model banayen to yahan bhi import karna hoga
 from catalog.alchemy_model import Category , Products
+from cart.alchemy_model import CartItem
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

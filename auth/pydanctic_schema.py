@@ -17,11 +17,9 @@ class UserCreate(BaseModel):
             return value.strip().lower()
         return value
     
-
 class UserLogin(BaseModel):
     email : str
     password: str = Field(min_length=8, max_length=72)
-
 
 class TokenPair(BaseModel):
     access_token: str

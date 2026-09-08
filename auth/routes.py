@@ -29,7 +29,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
             detail="Email already registered."
         )
 
-    # Create new user object
+# Create new user object
     new_user = Users(
         full_name=user.full_name,
         email=user.email,

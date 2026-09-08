@@ -3,16 +3,13 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt, JWTError
 from core.config import settings
 
-
 """
 security.py
-
 Purpose:
 - Hash plain text passwords before storing them in the database.
 - Verify user passwords during login.
 - Later this file will also contain JWT token functions.
 """
-
 # Hash Password
 def hash_password(password: str) -> str:
     # bcrypt works on bytes, not str — encode first

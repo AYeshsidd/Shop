@@ -16,7 +16,7 @@ SessionLocal = sessionmaker(
 )
 
 Base = declarative_base() # Without Base, SQLAlchemy cannot understand which classes are tables
-
+    
 def get_db():
     db = SessionLocal()
 
